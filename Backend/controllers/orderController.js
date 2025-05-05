@@ -7,7 +7,8 @@ import User from "../models/User.js"
 // 1. Place Order - COD
 export const placeOrderCOD = async (req, res) => {
   try {
-    const { userId, items, address } = req.body;
+    const userId = req.userId;
+    const {  items, address } = req.body;
 
     if (!address || items.length === 0) {
       return res.json({ success: false, message: "Invalid data" });
@@ -40,7 +41,8 @@ export const placeOrderCOD = async (req, res) => {
 // 2. Place Order - Stripe
 export const placeOrderStripe = async (req, res) => {
   try {
-    const { userId, items, address } = req.body;
+    const userId = req.userId;
+    const { items, address } = req.body;
     const { origin } = req.headers;
 
     if (!address || items.length === 0) {
@@ -123,7 +125,7 @@ try {
 //hande the event 
 
 switch(event.type){
-  case "payment_itent.succeeded":{
+  case "payment_intent.succeeded":{
     const paymentIntent = event.data.object;
     const paymentIntentId = paymentIntent.id;
 
